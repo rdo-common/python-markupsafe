@@ -6,7 +6,7 @@
 
 Name: python-markupsafe
 Version: 0.11
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Languages
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Aug 04 2012 David Malcolm <dmalcolm@redhat.com> - 0.11-7
+- rebuild for https://fedoraproject.org/wiki/Features/Python_3.3
+
 * Fri Aug  3 2012 David Malcolm <dmalcolm@redhat.com> - 0.11-6
 - remove rhel logic from with_python3 conditional
 
