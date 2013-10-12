@@ -5,8 +5,8 @@
 %endif
 
 Name: python-markupsafe
-Version: 0.11
-Release: 9%{?dist}
+Version: 0.18
+Release: 1%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Languages
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Oct 11 2013 Luke Macken <lmacken@redhat.com> - 0.18-1
+- Update to 0.18 (#678537)
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.11-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
