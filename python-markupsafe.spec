@@ -83,13 +83,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS LICENSE README.rst
 %{python_sitearch}/*
 
 %if 0%{?with_python3}
 %files -n python3-markupsafe
-%defattr(-,root,root,-)
 %doc AUTHORS LICENSE README.rst
 %{python3_sitearch}/*
 %endif # with_python3
