@@ -5,7 +5,7 @@
 %endif
 
 Name: python-markupsafe
-Version: 0.18
+Version: 0.23
 Release: 1%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri May  9 2014 Orion Poplawski <orion@cora.nwra.com> - 0.23-1
+- Update to 0.23
+
 * Fri Oct 11 2013 Luke Macken <lmacken@redhat.com> - 0.18-1
 - Update to 0.18 (#678537)
 
