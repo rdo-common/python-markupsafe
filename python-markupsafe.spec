@@ -6,7 +6,7 @@
 
 Name: python-markupsafe
 Version: 0.23
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Languages
@@ -15,7 +15,7 @@ URL: http://pypi.python.org/pypi/MarkupSafe
 Source0: http://pypi.python.org/packages/source/M/MarkupSafe/MarkupSafe-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: python-devel python-setuptools-devel
+BuildRequires: python-devel python-setuptools
 
 %if 0%{?with_python3}
 BuildRequires: python3-devel python3-setuptools
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jun 30 2014 Toshio Kuratomi <toshio@fedoraproject.org> - 0.23-5
+- Replace the python-setuptools-devel BR with python-setuptools
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.23-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
