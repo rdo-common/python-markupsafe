@@ -6,7 +6,7 @@
 
 Name: python-markupsafe
 Version: 0.23
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Languages
@@ -94,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Oct 12 2015 Robert Kuska <rkuska@redhat.com> - 0.23-8
+- Rebuilt for Python3.5 rebuild
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.23-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
