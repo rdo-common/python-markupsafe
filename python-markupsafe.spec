@@ -1,36 +1,40 @@
-%if 0%{?fedora} > 12
+%if 0%{?fedora}
 %global with_python3 1
-%else
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 %endif
 
 Name: python-markupsafe
 Version: 0.23
-Release: 10%{?dist}
+Release: 11%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Languages
 License: BSD
 URL: http://pypi.python.org/pypi/MarkupSafe
 Source0: http://pypi.python.org/packages/source/M/MarkupSafe/MarkupSafe-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: python-devel python-setuptools
+BuildRequires: python2-devel python2-setuptools
 
 %if 0%{?with_python3}
 BuildRequires: python3-devel python3-setuptools
-# For /usr/bin/2to3
-BuildRequires: python-tools
 %endif # if with_python3
 
 
 %description
 A library for safe markup escaping.
 
+%package -n python2-markupsafe
+Summary: Implements a XML/HTML/XHTML Markup safe string for Python 2
+Group: Development/Languages
+%{?python_provide:%python_provide python2-markupsafe}
+
+%description -n python2-markupsafe
+A library for safe markup escaping.
+
 %if 0%{?with_python3}
 %package -n python3-markupsafe
-Summary: Implements a XML/HTML/XHTML Markup safe string for Python
+Summary: Implements a XML/HTML/XHTML Markup safe string for Python 3
 Group: Development/Languages
+%{?python_provide:%python_provide python3-markupsafe}
 
 %description -n python3-markupsafe
 A library for safe markup escaping.
@@ -39,52 +43,38 @@ A library for safe markup escaping.
 %prep
 %setup -q -n MarkupSafe-%{version}
 
-%if 0%{?with_python3}
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-2to3 --write --nobackups %{py3dir}
-%endif # with_python3
-
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
+%py2_build
 
 %if 0%{?with_python3}
-pushd %{py3dir}
-CFLAGS="$RPM_OPT_FLAGS" %{__python3} setup.py build
-popd
+%py3_build
 %endif # with_python3
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+%py2_install
 # C code errantly gets installed
-rm $RPM_BUILD_ROOT/%{python_sitearch}/markupsafe/*.c
+rm $RPM_BUILD_ROOT/%{python2_sitearch}/markupsafe/*.c
 
 %if 0%{?with_python3}
-pushd %{py3dir}
-%{__python3} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
-rm $RPM_BUILD_ROOT/%{python3_sitearch}/markupsafe/*.c
-popd
+%py3_install
 %endif # with_python3
+# C code errantly gets installed
+rm $RPM_BUILD_ROOT/%{python3_sitearch}/markupsafe/*.c
 
 
 %check
-%{__python} setup.py test
+%{__python2} setup.py test
 
 %if 0%{?with_python3}
-pushd %{py3dir}
 %{__python3} setup.py test
-popd
 %endif # with_python3
 
-%clean
-rm -rf $RPM_BUILD_ROOT
 
-
-%files
-%doc AUTHORS LICENSE README.rst
-%{python_sitearch}/*
+%files -n python2-markupsafe
+%license LICENSE
+%doc AUTHORS README.rst
+%{python2_sitearch}/*
 
 %if 0%{?with_python3}
 %files -n python3-markupsafe
@@ -94,6 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Sep 22 2016 Orion Poplawski <orion@cora.nwra.com> - 0.23-11
+- Ship python2-markupsafe
+- Modernize spec
+
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.23-10
 - https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
 
