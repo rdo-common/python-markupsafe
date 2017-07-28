@@ -1,10 +1,6 @@
-%if 0%{?fedora}
-%global with_python3 1
-%endif
-
 Name: python-markupsafe
 Version: 0.23
-Release: 14%{?dist}
+Release: 15%{?dist}
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Languages
@@ -13,11 +9,7 @@ URL: http://pypi.python.org/pypi/MarkupSafe
 Source0: http://pypi.python.org/packages/source/M/MarkupSafe/MarkupSafe-%{version}.tar.gz
 
 BuildRequires: python2-devel python2-setuptools
-
-%if 0%{?with_python3}
 BuildRequires: python3-devel python3-setuptools
-%endif # if with_python3
-
 
 %description
 A library for safe markup escaping.
@@ -30,7 +22,6 @@ Group: Development/Languages
 %description -n python2-markupsafe
 A library for safe markup escaping.
 
-%if 0%{?with_python3}
 %package -n python3-markupsafe
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python 3
 Group: Development/Languages
@@ -38,37 +29,27 @@ Group: Development/Languages
 
 %description -n python3-markupsafe
 A library for safe markup escaping.
-%endif #if with_python3
 
 %prep
 %setup -q -n MarkupSafe-%{version}
 
 %build
 %py2_build
-
-%if 0%{?with_python3}
 %py3_build
-%endif # with_python3
-
 
 %install
 %py2_install
 # C code errantly gets installed
 rm $RPM_BUILD_ROOT/%{python2_sitearch}/markupsafe/*.c
 
-%if 0%{?with_python3}
 %py3_install
-%endif # with_python3
 # C code errantly gets installed
 rm $RPM_BUILD_ROOT/%{python3_sitearch}/markupsafe/*.c
 
 
 %check
 %{__python2} setup.py test
-
-%if 0%{?with_python3}
 %{__python3} setup.py test
-%endif # with_python3
 
 
 %files -n python2-markupsafe
@@ -76,14 +57,15 @@ rm $RPM_BUILD_ROOT/%{python3_sitearch}/markupsafe/*.c
 %doc AUTHORS README.rst
 %{python2_sitearch}/*
 
-%if 0%{?with_python3}
 %files -n python3-markupsafe
 %doc AUTHORS LICENSE README.rst
 %{python3_sitearch}/*
-%endif # with_python3
 
 
 %changelog
+* Fri Jul 28 2017 Troy Dawson <tdawson@redhat.com> - 0.23-15
+- Clean up spec file
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.23-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
