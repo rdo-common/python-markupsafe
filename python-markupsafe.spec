@@ -8,6 +8,7 @@ License: BSD
 URL: http://pypi.python.org/pypi/MarkupSafe
 Source0: http://pypi.python.org/packages/source/M/MarkupSafe/MarkupSafe-%{version}.tar.gz
 
+BuildRequires:  gcc
 BuildRequires: python2-devel python2-setuptools
 BuildRequires: python3-devel python3-setuptools
 
