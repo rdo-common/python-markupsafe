@@ -1,51 +1,54 @@
-Name: python-markupsafe
-Version: 0.23
-Release: 19%{?dist}
-Summary: Implements a XML/HTML/XHTML Markup safe string for Python
-
-Group: Development/Languages
-License: BSD
-URL: http://pypi.python.org/pypi/MarkupSafe
-Source0: http://pypi.python.org/packages/source/M/MarkupSafe/MarkupSafe-%{version}.tar.gz
+Name:           python-markupsafe
+Version:        1.0
+Release:        1%{?dist}
+Summary:        Implements a XML/HTML/XHTML Markup safe string for Python
+License:        BSD
+URL:            https://pypi.org/project/MarkupSafe/
+Source0:        %pypi_source MarkupSafe
 
 BuildRequires:  gcc
-BuildRequires: python2-devel python2-setuptools
-BuildRequires: python3-devel python3-setuptools
 
 %description
 A library for safe markup escaping.
 
+
 %package -n python2-markupsafe
-Summary: Implements a XML/HTML/XHTML Markup safe string for Python 2
-Group: Development/Languages
+Summary:        Implements a XML/HTML/XHTML Markup safe string for Python 2
+BuildRequires:  python2-devel
+BuildRequires:  python2dist(setuptools)
 %{?python_provide:%python_provide python2-markupsafe}
 
 %description -n python2-markupsafe
-A library for safe markup escaping.
+A library for safe markup escaping. Python 2 version.
+
 
 %package -n python3-markupsafe
-Summary: Implements a XML/HTML/XHTML Markup safe string for Python 3
-Group: Development/Languages
+Summary:        Implements a XML/HTML/XHTML Markup safe string for Python 3
+BuildRequires:  python3-devel
+BuildRequires:  python3dist(setuptools)
 %{?python_provide:%python_provide python3-markupsafe}
 
 %description -n python3-markupsafe
-A library for safe markup escaping.
+A library for safe markup escaping. Python 3 version.
+
 
 %prep
-%setup -q -n MarkupSafe-%{version}
+%autosetup -n MarkupSafe-%{version}
+
 
 %build
 %py2_build
 %py3_build
 
+
 %install
 %py2_install
 # C code errantly gets installed
-rm $RPM_BUILD_ROOT/%{python2_sitearch}/markupsafe/*.c
+rm %{buildroot}%{python2_sitearch}/markupsafe/*.c
 
 %py3_install
 # C code errantly gets installed
-rm $RPM_BUILD_ROOT/%{python3_sitearch}/markupsafe/*.c
+rm %{buildroot}%{python3_sitearch}/markupsafe/*.c
 
 
 %check
@@ -55,15 +58,22 @@ rm $RPM_BUILD_ROOT/%{python3_sitearch}/markupsafe/*.c
 
 %files -n python2-markupsafe
 %license LICENSE
-%doc AUTHORS README.rst
-%{python2_sitearch}/*
+%doc AUTHORS CHANGES README.rst
+%{python2_sitearch}/MarkupSafe-%{version}-py%{python2_version}.egg-info/
+%{python2_sitearch}/markupsafe/
+
 
 %files -n python3-markupsafe
-%doc AUTHORS LICENSE README.rst
-%{python3_sitearch}/*
+%license LICENSE
+%doc AUTHORS CHANGES README.rst
+%{python3_sitearch}/MarkupSafe-%{version}-py%{python3_version}.egg-info/
+%{python3_sitearch}/markupsafe/
 
 
 %changelog
+* Tue Jul 31 2018 Miro Hrončok <mhroncok@redhat.com> - 1.0-1
+- Update to 1.0 (#1430160)
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.23-19
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
