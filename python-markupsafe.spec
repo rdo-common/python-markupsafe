@@ -1,10 +1,18 @@
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global with_python3 1
+%endif
+
 Name:           python-markupsafe
 Version:        1.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Implements a XML/HTML/XHTML Markup safe string for Python
 License:        BSD
 URL:            https://pypi.org/project/MarkupSafe/
+%if 0%{?fedora} || 0%{?rhel} > 7
 Source0:        %pypi_source MarkupSafe
+%else
+Source0:        https://files.pythonhosted.org/packages/source/M/MarkupSafe/MarkupSafe-%{version}.tar.gz
+%endif
 
 BuildRequires:  gcc
 
@@ -15,13 +23,13 @@ A library for safe markup escaping.
 %package -n python2-markupsafe
 Summary:        Implements a XML/HTML/XHTML Markup safe string for Python 2
 BuildRequires:  python2-devel
-BuildRequires:  python2dist(setuptools)
+BuildRequires:  python2-setuptools
 %{?python_provide:%python_provide python2-markupsafe}
 
 %description -n python2-markupsafe
 A library for safe markup escaping. Python 2 version.
 
-
+%if 0%{?with_python3}
 %package -n python3-markupsafe
 Summary:        Implements a XML/HTML/XHTML Markup safe string for Python 3
 BuildRequires:  python3-devel
@@ -30,6 +38,7 @@ BuildRequires:  python3dist(setuptools)
 
 %description -n python3-markupsafe
 A library for safe markup escaping. Python 3 version.
+%endif
 
 
 %prep
@@ -38,7 +47,9 @@ A library for safe markup escaping. Python 3 version.
 
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 
 %install
@@ -46,14 +57,18 @@ A library for safe markup escaping. Python 3 version.
 # C code errantly gets installed
 rm %{buildroot}%{python2_sitearch}/markupsafe/*.c
 
+%if 0%{?with_python3}
 %py3_install
 # C code errantly gets installed
 rm %{buildroot}%{python3_sitearch}/markupsafe/*.c
+%endif
 
 
 %check
 %{__python2} setup.py test
+%if 0%{?with_python3}
 %{__python3} setup.py test
+%endif
 
 
 %files -n python2-markupsafe
@@ -62,15 +77,18 @@ rm %{buildroot}%{python3_sitearch}/markupsafe/*.c
 %{python2_sitearch}/MarkupSafe-%{version}-py%{python2_version}.egg-info/
 %{python2_sitearch}/markupsafe/
 
-
+%if 0%{?with_python3}
 %files -n python3-markupsafe
 %license LICENSE.rst
 %doc CHANGES.rst README.rst
 %{python3_sitearch}/MarkupSafe-%{version}-py%{python3_version}.egg-info/
 %{python3_sitearch}/markupsafe/
-
+%endif
 
 %changelog
+* Mon Feb 18 2019 Yatin Karel <ykarel@redhat.com> - 1.1.0-2
+- Add Conditionals to not build python3 for CentOS <= 7
+
 * Mon Feb 18 2019 Yatin Karel <ykarel@redhat.com> - 1.1.0-1
 - Update to 1.1.0
 
