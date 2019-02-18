@@ -1,6 +1,6 @@
 Name:           python-markupsafe
-Version:        1.0
-Release:        2%{?dist}
+Version:        1.1.0
+Release:        1%{?dist}
 Summary:        Implements a XML/HTML/XHTML Markup safe string for Python
 License:        BSD
 URL:            https://pypi.org/project/MarkupSafe/
@@ -57,20 +57,23 @@ rm %{buildroot}%{python3_sitearch}/markupsafe/*.c
 
 
 %files -n python2-markupsafe
-%license LICENSE
-%doc AUTHORS CHANGES README.rst
+%license LICENSE.rst
+%doc CHANGES.rst README.rst
 %{python2_sitearch}/MarkupSafe-%{version}-py%{python2_version}.egg-info/
 %{python2_sitearch}/markupsafe/
 
 
 %files -n python3-markupsafe
-%license LICENSE
-%doc AUTHORS CHANGES README.rst
+%license LICENSE.rst
+%doc CHANGES.rst README.rst
 %{python3_sitearch}/MarkupSafe-%{version}-py%{python3_version}.egg-info/
 %{python3_sitearch}/markupsafe/
 
 
 %changelog
+* Mon Feb 18 2019 Yatin Karel <ykarel@redhat.com> - 1.1.0-1
+- Update to 1.1.0
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
